@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,7 @@ public class StreamOperations {
 		operations.priceSum(productList);
 		operations.arrayToStream(arr);
 		operations.convertListToMap(productList);
+		operations.convertArrayToSet();
 	}
 
 	private void filterListAndPrint(List<Product> productList) {
@@ -93,6 +95,17 @@ public class StreamOperations {
 	private void arrayToStream(int[] array)
 	{
 		Arrays.stream(array).forEach(System.out::println);
+	}
+	
+	private void convertArrayToSet() {
+		int[] arr = { 1, 2, 3, 4, 5 };
+		/*
+		 * Primitive stream can't be converted to object stream. Here stream of integer
+		 * array will return intStream but set need object stream like IntegerStream.
+		 * Hence calling boxed() on intStream() will help.
+		 */
+		Set<Integer> set = Arrays.stream(arr).boxed().collect(Collectors.toSet());
+		System.out.println(set);
 	}
 	
 	private void convertListToMap(List<Product> productList)
