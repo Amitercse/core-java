@@ -2,6 +2,7 @@ package com.amit.stream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class StreamOperations {
 		StreamOperations operations = new StreamOperations();
 		Product product1 = new Product(1, "product 1", 100.5);
 		Product product2 = new Product(2, "product 2", 160.5);
-		Product product3 = new Product(3, "product 3", 200.5);
+		Product product3 = new Product(3, "product 3", 250.5);
 		Product product4 = new Product(4, "product 4", 220.5);
 		List<Product> productList = new ArrayList<>();
 		productList.add(product1);
@@ -40,6 +41,7 @@ public class StreamOperations {
 		operations.arrayToStream(arr);
 		operations.convertListToMap(productList);
 		operations.convertArrayToSet();
+		operations.sortStream(productList);
 	}
 
 	private void filterListAndPrint(List<Product> productList) {
@@ -106,6 +108,18 @@ public class StreamOperations {
 		 */
 		Set<Integer> set = Arrays.stream(arr).boxed().collect(Collectors.toSet());
 		System.out.println(set);
+	}
+	
+	private void sortStream(List<Product> productList) {
+		Comparator<Product> comparator = new Comparator<Product>() {
+
+			@Override
+			public int compare(Product p1, Product p2) {
+				return (p1.getPrice() > p2.getPrice() ? -1 : 1);
+			}
+
+		};
+		productList.stream().sorted(comparator).forEach(System.out::println);
 	}
 	
 	private void convertListToMap(List<Product> productList)
